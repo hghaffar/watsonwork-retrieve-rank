@@ -7,26 +7,26 @@ var express = require('express'),
 
 // Watson Work Services URL
 const watsonWork = "https://api.watsonwork.ibm.com";
-
+// Environment variables 
 // Application Id, obtained from registering the application at https://developer.watsonwork.ibm.com
-const appId = process.env.WW_CLIENT_ID;
+const appId = '7b512859-9970-4f77-b83c-82ae99ab0cd8';
 
 // Application secret. Obtained from registration of application.
-const appSecret = process.env.WW_CLIENT_SECRET;
+const appSecret = 'qjc0m42wdjiuoumi4fx5m0o3ml7p3ai2';
 
 // Webhook secret. Obtained from registration of a webhook.
-const webhookSecret = process.env.WW_WEBHOOK_SECRET;
+const webhookSecret = 'j7x9fgfdy806fdg2dwd9c6blx50qrq1b';
 
 // Username and Password for Retrieve and Rank service.
-const rr_username = process.env.RR_USERNAME;
-const rr_password = process.env.RR_PASSWORD;
+const rr_username = '267387d8-1ed7-4bdc-91e3-25c5d72b25e2';
+const rr_password = 'oj5BqLO4GhEd';
 
-// cluster_id and collection nale of retrieve and rank search.
-const rr_cluster_id = process.env.RR_CLUSTER_ID;
-const rr_collection  = process.env.RR_COLLECTION;
+// cluster_id and collection name of retrieve and rank search.
+const rr_cluster_id = 'scd8888c24_8068_4f92_9475_87b4569fb8c8';
+const rr_collection  = 'Connections';
 
 // Keyword to "listen" for when receiving outbound webhook calls.
-const webhookKeyword = process.env.RR_WEBHOOK_CALL;
+const webhookKeyword = '@RR';
 
 const failMessage =
 `Hey, maybe it's me... maybe it's Retrieve and Rank, but I sense the fail whale should be here... Try again later`;
@@ -164,7 +164,7 @@ app.post('/webhook', validateEvent, (req, res) => {
   var RRQuery = req.body.content;
   // find if the webhookkeyword has been used in the string (at any place) 
   if (req.body.content.indexOf(webhookKeyword) === -1) {
-  	// if it's not requested, then we answer only if confidence is > 0.5
+  	// if it's not requested, then we answer only if confidence is > 0.7  (less make the bot to answer too often)
        	RRCalled = 0 ;
     } 
     else {
@@ -187,7 +187,7 @@ app.post('/webhook', validateEvent, (req, res) => {
   console.log('Getting Retrieve and Rank results: \'' + RRQuery + '\'');
 
    
-    // test to search in retrieve and rank 
+    // text to search in retrieve and rank 
     var RetrieveAndRankV1 = require('watson-developer-cloud/retrieve-and-rank/v1');
     var retrieve = new RetrieveAndRankV1({
         username: rr_username, 
@@ -207,13 +207,13 @@ retrieve.listRankers({},
     if (err)
       console.log('liste ranker id error: ', err);
     else {
-       //console.log(JSON.stringify(response, null, 2));
-       //  console.log('ranker_id :' + response.rankers[response.rankers.length-1].ranker_id);
+         // console.log(JSON.stringify(response, null, 2));
+         // console.log('ranker_id chosen: ' + response.rankers[response.rankers.length-1].ranker_id);
          // search doc in a ranker collections 
          //  Use a querystring parser to encode output.
          var qs = require('qs');
          var ranker_id = response.rankers[response.rankers.length-1].ranker_id;
-         var query1     = qs.stringify({q: RRQuery, ranker_id: ranker_id, fl: 'body,ranker.confidence'});
+         var query1     = qs.stringify({q: RRQuery, ranker_id: ranker_id, fl: 'title,body,fileName,ranker.confidence'});
 
          solrClient.get('fcselect', query1, function(err, searchResponse) {
              if(err) {
@@ -221,14 +221,14 @@ retrieve.listRankers({},
              }
             else {
             	
-                // console.log('reponse de retrieve ' + JSON.stringify(searchResponse.response.docs, null, 2));
+                //console.log('reponse de retrieve ' + JSON.stringify(searchResponse.response.docs, null, 2));
                 // we only send the biggest confidence answer 
                 // if the webhook call was not add in the workspace message then we send an answer only if 
-                // confidence should be > 0.5 
+                // confidence should be > 0.7  (less make the bot to answer too often) 
                 var tmp = searchResponse.response.docs[0] ; 
-                if (RRCalled === 1 || (RRCalled === 0 && tmp["ranker.confidence"] > 0.5) ){
+                if (RRCalled === 1 || (RRCalled === 0 && tmp["ranker.confidence"] > 0.7) ){
                 	var messageToPost2 = "";
-              	    messageToPost2 = "With a confidence of " + Math.round(tmp["ranker.confidence"]* 10000) / 100 + "% Here is the answer to your question :" + tmp["body"];
+              	    messageToPost2 = "With a confidence of " + Math.round(tmp["ranker.confidence"]* 10000) / 100 + "% Here is the answer to your question -- TITLE -- " + tmp["title"] + " -- CONTENT -- " + tmp["body"];
                	    console.log(messageToPost2);
                  	sendMessage(spaceId, messageToPost2, RRQuery);
                 }

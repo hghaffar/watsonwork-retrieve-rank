@@ -16,7 +16,7 @@ Assuming you just want to take this code and get it running before hacking it, t
 
 To facilitate things, you can click the button below and it'll get it going to Bluemix very easily, however this is **NOT** required. Feel free to deploy on any server you want.
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/watsonwork/watsonwork-retrieve-rank)
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/hghaffar/watsonwork-retrieve-rank.git)
 
 *Note*: you can run this code locally, but then you would need to change the webhook code to get the URL of the callback. See Appendix for instructions.
 
@@ -39,21 +39,19 @@ Second, let's register the app with IBM Watson Workspace and get some keys!
 2. On the left, enter the `App Name` and the `Description of App`
 3. Click on `Add an outbound webhook`
 4. Give the webhook a name (e.g. "listen for messages") and check the `message-created` webhook. This is how we'll listen to messages in a space
-5. In the callback URL, specify the URL for your app. This code assumes that the webhook listener is at `https://yoururl/webhook` so don't forget to add `/webhook` to the end of the URL (if you don't know where the app will be deployed, use a sample URL for now, like `https://twitter.acme.com/webhook` and you can modify that later)
+5. In the callback URL, specify the URL for your app. This code assumes that the webhook listener is at `https://yoururl/webhook` so don't forget to add `/webhook` to the end of the URL (if you don't know where the app will be deployed, use a sample URL for now, like `https://retrieve.acme.com/webhook` and you can modify that later)
 6. Click on `Register app`
-7. This will give you the App ID, App secret and webhook secret. You *need to save* these to environment variables called `TWITTER_CLIENT_ID`, `TWITTER_CLIENT_SECRET`, and `TWITTER_WEBHOOK_SECRET` respectively
+7. This will give you the App ID, App secret and webhook secret. You *need to save* these inside the code in Variable section called `WW_CLIENT_ID`, `WW_CLIENT_SECRET`, and `WW_WEBHOOK_SECRET` respectively
 
 At this point the webhook is not enabled since the system has not been able to verify it's up and running. While the webhook is probably running on Bluemix, it doesn't have the variables set
 
 ## Configure your app
 
-Now that we have the API keys, set them as environment variables. If you are using Bluemix, you can set them up following these steps:
+Now that we have the API keys, set them in the code. If you are using Bluemix, you can set them up following these steps:
 
-1. Go to [the Bluemix console](https://console.ng.bluemix.net/dashboard/applications/) and click on your app
-2. Go to Runtime -> Environment Variables
-3. Define the 7 variables from above: `WW_CLIENT_ID`, `WW_CLIENT_SECRET`, `WW_WEBHOOK_SECRET`, `RR_USERNAME`, `RR_USERNAME`, `RR_CLUSTER_ID` and `RR_COLLECTION`, provide the right values and save them.
-4. Define a variable RR_WEBHOOK_CALL if you want to change the key @RR that told the bot that the question is for him to answer.  
-4. Stop and start the app so the values take effect.
+1. Go to code  -> at section Environment Variables
+3. change the 7 variables from above: `WW_CLIENT_ID`, `WW_CLIENT_SECRET`, `WW_WEBHOOK_SECRET`, `RR_USERNAME`, `RR_USERNAME`, `RR_CLUSTER_ID` and `RR_COLLECTION`, provide the right values and save them.
+4. Redeploy and start the app so the values take effect.
 
 You are almost there!!! 
 
@@ -63,7 +61,7 @@ You are almost there!!!
 2. Check the box to enable your webhook
 3. Save your changes by clicking on "Edit app"
 
-This now does an HTTP POST verification call to ensure your webhook is setup properly. This will also ensure that all your variables and code are good to go. If so, the webhook is now enabled and it's ready to be used! How easy was that!?!
+This now does an HTTP POST verification call to ensure your webhook is setup properly. This will also ensure that all your code and variable are good to go. If so, the webhook is now enabled and it's ready to be used! How easy was that!?!
 
 ## Add the Retrieve and Rank app to a space to test
 We are almost there! Now we need to add the app to spaces that we want to listen for messages, and where the app will post messages to.
@@ -93,7 +91,5 @@ Licensed under Apache 2.0 (see LICENSE)
 Depends on:
 * body-parser
 * express
-* request
-* twitter
 * request
 * watson-developer-cloud

@@ -2,9 +2,9 @@
   "name": "watsonwork-retrieve-rank",
   "version": "1.0.1",
   "description": "IBM Watson Workspace Retrieve and rank app",
-  "main": "lib/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node lib/app.js",
+    "start": "node app.js",
     "babel": "babel app.js --out-dir lib",
     "build": "npm run babel"
   },
