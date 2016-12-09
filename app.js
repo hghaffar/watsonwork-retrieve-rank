@@ -226,10 +226,14 @@ retrieve.listRankers({},
                 // if the webhook call was not add in the workspace message then we send an answer only if 
                 // confidence should be > 0.7  (less make the bot to answer too often) 
                 var tmp = searchResponse.response.docs[0] ; 
+               
                 if (RRCalled === 1 || (RRCalled === 0 && tmp["ranker.confidence"] > 0.7) ){
-                	var messageToPost2 = "";
+                	// if there is no answer 
+                	var messageToPost2 = "I have no answer";
+                	if (searchResponse.numFound > 1){ 
               	    messageToPost2 = "With a confidence of " + Math.round(tmp["ranker.confidence"]* 10000) / 100 + "% Here is the answer to your question -- TITLE -- " + tmp["title"] + " -- CONTENT -- " + tmp["body"];
-               	    console.log(messageToPost2);
+               	   }
+               	   console.log(messageToPost2);
                  	sendMessage(spaceId, messageToPost2, RRQuery);
                 }
               }   
