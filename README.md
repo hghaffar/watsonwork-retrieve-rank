@@ -27,11 +27,13 @@ Now let's register the app to get some API keys and get things going.
 First, we need several API keys from Watson Retrieve&Rank. You can get them by going go to bluemix in the Retrieve and Rank service. 
 In a couple of steps you can super easily register a "bot". 
 
-get  RR_USERNAME :   Username in the retrieve and rank servce credentials
-get  RR_PASSWORD : password in the retrieve and rank servce credentials
+get  RR_USERNAME :   Username in the retrieve and rank service credentials
+get  RR_PASSWORD : password in the retrieve and rank service credentials
 get  RR_CLUSTER_ID : the cluster_id of your repository in conversion services
-get  RR_COLLECTION : name of the collection that contains the document to search
+get  RR_COLLECTION : name of the collection that contains the documents to search
 ```
+For initial test, you could keep the values in the code. 
+This will allow you to use a retrieve and rank repository with Connections documents in it. 
 
 Second, let's register the app with IBM Watson Workspace and get some keys!
 
