@@ -10,33 +10,33 @@ const watsonWork = "https://api.watsonwork.ibm.com";
 // Environment variables 
 
 //Application Id, obtained from registering the application at https://developer.watsonwork.ibm.com
-//const appId = process.env.WW_CLIENT_ID;
-const appId = '7b512859-9970-4f77-b83c-82ae99ab0cd8';
+const appId = process.env.WW_CLIENT_ID;
+//const appId = '7b512859-9970-4f77-b83c-82ae99ab0cd8';
 
 // Application secret. Obtained from registration of application.
-//const appSecret = process.env.WW_CLIENT_SECRET;
-const appSecret = 'qjc0m42wdjiuoumi4fx5m0o3ml7p3ai2';
+const appSecret = process.env.WW_CLIENT_SECRET;
+//const appSecret = 'qjc0m42wdjiuoumi4fx5m0o3ml7p3ai2';
 
 // Webhook secret. Obtained from registration of a webhook.
-//const webhookSecret = process.env.WW_WEBHOOK_SECRET;
-const webhookSecret = 'j7x9fgfdy806fdg2dwd9c6blx50qrq1b';
+const webhookSecret = process.env.WW_WEBHOOK_SECRET;
+//const webhookSecret = 'j7x9fgfdy806fdg2dwd9c6blx50qrq1b';
 
 // Username and Password for Retrieve and Rank service.
-//const rr_username = process.env.RR_USERNAME;
-//const rr_password = process.env.RR_PASSWORD;
-const rr_username = '267387d8-1ed7-4bdc-91e3-25c5d72b25e2';
-const rr_password = 'oj5BqLO4GhEd';
+const rr_username = process.env.RR_USERNAME;
+const rr_password = process.env.RR_PASSWORD;
+//const rr_username = '267387d8-1ed7-4bdc-91e3-25c5d72b25e2';
+//const rr_password = 'oj5BqLO4GhEd';
 
 // cluster_id and collection nale of retrieve and rank search.
-//const rr_cluster_id = process.env.RR_CLUSTER_ID;
-//const rr_collection  = process.env.RR_COLLECTION;
-const rr_cluster_id = 'scd8888c24_8068_4f92_9475_87b4569fb8c8';
-const rr_collection  = 'Connections';
+const rr_cluster_id = process.env.RR_CLUSTER_ID;
+const rr_collection  = process.env.RR_COLLECTION;
+//const rr_cluster_id = 'scd8888c24_8068_4f92_9475_87b4569fb8c8';
+//const rr_collection  = 'Connections';
 
 
 // Keyword to "listen" for when receiving outbound webhook calls.
-//const webhookKeyword = process.env.RR_WEBHOOK_CALL;
-const webhookKeyword = '@RR';
+const webhookKeyword = process.env.RR_WEBHOOK_CALL;
+//const webhookKeyword = '@RR';
 
 
 const failMessage =
