@@ -26,6 +26,7 @@ const rr_username = process.env.RR_USERNAME;
 const rr_password = process.env.RR_PASSWORD;
 //const rr_username = '267387d8-1ed7-4bdc-91e3-25c5d72b25e2';
 //const rr_password = 'oj5BqLO4GhEd';
+//console.log("RR_USErnAme : " + rr_username);
 
 // cluster_id and collection nale of retrieve and rank search.
 const rr_cluster_id = process.env.RR_CLUSTER_ID;
